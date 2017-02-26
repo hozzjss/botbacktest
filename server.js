@@ -1,26 +1,24 @@
-const express = require('express')
-const request = require('request')
-const cheerio = require('cheerio')
-const url = require('url')
-const app = express()
-const port = process.env.PORT || 8080
+var express = require('express');
+var request = require('request');
+var app = express();
+var port = process.env.PORT || 8080;
 
 app.use(function(req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Methods', 'GET')
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
-  res.setHeader('Access-Control-Allow-Credentials', true)
-  next()
-})
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
 
 app.get('/', function(req, res) {
-  res.send("Usage: /search or /sentiment")
-})
+  res.end("Usage: /search or /sentiment");
+});
 
 app.get('/search', function(req, res) {
-  let searchQuery = req.query.query;
-	let key = req.query.key;
-  let options = {
+  var searchQuery = req.query.query;
+	var key = req.query.key;
+  var options = {
     url: 'https://api.cognitive.microsoft.com/bing/v5.0/news/search?q=' + searchQuery,
     method: 'GET',
     headers: {
@@ -29,15 +27,14 @@ app.get('/search', function(req, res) {
   };
 	request(options, function (error, response, body) {
 		if (!error) {
-			console.log(body);
 			res.end(body);
 		}
-	})
-})
+	});
+});
 
 app.get('/sentiment', function (req, res) {
-	let query = req.query.query;
-	let key = req.query.key;
+	var query = req.query.query;
+	var key = req.query.key;
 	var options = {
 		url: 'https://westus.api.cognitive.microsoft.com/text/analytics/v2.0/sentiment',
 		method: 'POST',
@@ -55,11 +52,10 @@ app.get('/sentiment', function (req, res) {
 	};
 	request(options, function (error, response, body) {
 		if (!error) {
-			console.log(body);
 			res.end(body);
 		}
-	})
-})
-app.listen(port)
+	});
+});
+app.listen(port);
 console.log("app running on port", port);
 exports = module.exports = app;
