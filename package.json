@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/hozzjss/botbacktest/issues"
   },
-  "homepage": "https://github.com/hozzjss/botbacktest#readme"
+  "homepage": "https://github.com/hozzjss/botbacktest#readme",
+  "dependencies": {
+    "express": "^4.14.1",
+    "request": "^2.79.0"
+  }
 }
